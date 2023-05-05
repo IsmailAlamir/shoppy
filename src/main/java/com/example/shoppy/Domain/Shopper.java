@@ -1,8 +1,12 @@
 package com.example.shoppy.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
+@JsonIgnoreProperties({"likedItems"})
 @Setter
 @Getter
 @NoArgsConstructor
@@ -18,5 +22,18 @@ public class Shopper {
 
     @NonNull
     private String name;
+
+    @ManyToMany
+    @JoinTable(
+            name = "liked_item",
+            joinColumns = @JoinColumn(name = "Shopper_id"),
+            inverseJoinColumns = @JoinColumn(name = "Item_id")
+    )
+
+    Set<Item> likedItems;
+
+    public void setLikedItems(Item item){
+        likedItems.add(item);
+    }
 
 }

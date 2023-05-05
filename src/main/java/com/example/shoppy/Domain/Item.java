@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @JsonIgnoreProperties({"cart"}) //to Ignore the error that cause infinite loop between cart and item in createNewItem method
 @Setter
@@ -29,4 +30,6 @@ public class Item {
     @ManyToOne
     Cart cart;  // the name "cart" should be same as in Item class
 
+    @ManyToMany(mappedBy = "likedItems")
+    private Set<Shopper> shoppers;
 }
