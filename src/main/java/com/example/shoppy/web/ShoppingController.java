@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -67,10 +68,29 @@ public class ShoppingController {
         return item;
     }
 
-
     @ResponseBody
     @GetMapping("/carts")
     List<Cart> getAllCarts(){
         return cartRepository.findAll();
     }
+
+    @ResponseBody
+    @GetMapping("/carts/{id}/items")
+    List<Item> findAllItemsOfCart(@PathVariable Long id){
+        return itemRepository.findAllByCart_Id(id);
+    }
+
+    @ResponseBody
+    @GetMapping("/items/cost/{cost}")
+    List<Item> findAllItemsAboveCost(@PathVariable BigDecimal cost) {
+
+        return itemRepository.findItemsGreatThanCost(cost);
+    }
+
+
+
+
+
+
 }
+
